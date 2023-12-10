@@ -349,17 +349,19 @@ int main()
 		printf("FILE NOT FOUND(u)");
 		return -1;
 	}
-	for (i = 0; i < USER_MAX; i++)
-	{
-		char uname[20];
-		char upassword[20];
-		fscanf(fu, "%s%s", uname, upassword);
-
-		strcpy(list[i].name, uname);
-		strcpy(list[i].password, upassword);
-	}
+	
 	while (1)
 	{
+		for (i = 0; i < USER_MAX; i++)
+		{
+			char uname[20];
+			char upassword[20];
+			fscanf(fu, "%s%s", uname, upassword);
+
+			strcpy(list[i].name, uname);
+			strcpy(list[i].password, upassword);
+		}
+
 		int choice = login_menu();
 
 		if (1 == choice)
