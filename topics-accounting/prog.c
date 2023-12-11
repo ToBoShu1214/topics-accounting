@@ -225,7 +225,7 @@ void scantoarray()//抓檔案data至陣列
 	return;
 }
 
-int JudgmentDate(char date[20], int choice, int count)
+int JudgmentDate(char date[20], int choice, int count)//判斷使用者輸入時間的合法性
 {
 	time_t currentTime;
 	struct tm* localTime;
@@ -234,8 +234,6 @@ int JudgmentDate(char date[20], int choice, int count)
 	localTime = localtime(&currentTime);
 	int Leap = (localTime->tm_year + 1900 % 4 == 0 && localTime->tm_year + 1900 % 100 != 0) || (localTime->tm_year + 1900 % 400 == 0) ? 29 : 28;//判別是否為閏年
 	int month, day;
-	char jdate [20];
-	//strcpy(jdate, date);
 	month = atoi(date) / 100;
 	day = atoi(date) % 100;
 	if (month > 12 || month <= 0)
@@ -283,7 +281,7 @@ void output(int choice, char search[20])
 	cmd = atoi(search);
 	if (choice == 1)//查日期
 	{
-		printf("-----%2d/%2d支出-----\n", cmd / 100, cmd % 100);
+		printf("-----%02d/%02d支出-----\n", cmd / 100, cmd % 100);
 		for (i = 0; i < LIST_MAX; i++)
 		{
 			if (strcmp(search, expend[i].date) == 0)
@@ -297,7 +295,7 @@ void output(int choice, char search[20])
 		if (iFlag == 0)
 		{
 			system("cls");
-			printf("未查詢到%2d/%2d有任何支出\n\n", cmd / 100, cmd % 100);
+			printf("未查詢到%02d/%02d有任何支出\n\n", cmd / 100, cmd % 100);
 		}
 		return;
 	}
@@ -349,7 +347,7 @@ void output(int choice, char search[20])
 		{
 			if (strcmp(null, expend[i].date) == 0)
 				break;
-			printf("%s\t", expend[i].date);
+			printf("%04s\t", expend[i].date);
 			printf("%s\t", expend[i].category);
 			printf("%s\n", expend[i].amount);
 			iFlag = 1;
@@ -370,7 +368,7 @@ void output(int choice, char search[20])
 		{
 			if (strcmp(null, income[i].date) == 0)
 				break;
-			printf("%s\t", income[i].date);
+			printf("%04s\t", income[i].date);
 			printf("%s\t", income[i].category);
 			printf("%s\n", income[i].amount);
 			iFlag = 1;
