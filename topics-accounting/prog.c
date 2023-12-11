@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <windows.h>//Sleep
 
 
@@ -111,6 +112,7 @@ int login_menu()
 	printf("2.註冊\n");
 	printf("#.離開\n");
 	printf("輸入你的選擇:");
+	printf("輸入你的選擇:");
 	scanf("%d", &choice);
 	return choice;
 }
@@ -133,36 +135,41 @@ int prog_menu()
 	return choice;
 }
 
-ListItem account(int pchoice)//鍵入data
+ListItem account(int choice,int count)//鍵入data
 {
-	while (1)
-	{
-		char date[20];
-		char category[20];
-		char amount[20];
-		char choice;
-		ListItem ac;
+	int save;
+	char date[20];
+	char category[20];
+	char amount[20];
+	char cchoice;
+	ListItem ac;
+	save = count;
+  do{
 		system("cls");
 		printf(" ＿＿＿\n");
 		printf("| 記帳 |\n");
-		printf(" ￣￣￣\n");
+		printf(" ￣￣￣\n");	
+		printf("第%d筆資料\n\n", save + 1 - count);
 		printf("輸入日期(mmdd):");
 		scanf("%s", date);
+		if (JudgmentDate(date, choice, count) == -1)
+			continue;
 		strcpy(ac.date, date);
 		printf("輸入類別:");
 		scanf("%s", category);
 		strcpy(ac.category, category);
 		printf("輸入金額:");
 		scanf("%s", &amount);
-		rewind(stdin);//消除enter
 		strcpy(ac.amount, amount);
-		writetoFile(ac, pchoice);
-		printf("是否離開(Y):");
-		scanf("%c", &choice);
-		if (choice == 'Y' || choice == 'y')
-			return;
+		writetoFile(ac, choice);
+		count--;
 		system("cls");
-	}
+	} while (count != 0);
+	system("cls");
+	printf("記帳結束，將返回主選單");
+	Sleep(1500);
+	system("cls");
+	return;
 }
 
 int writetoFile(ListItem wf, int choice)//將data寫入檔案
@@ -218,22 +225,80 @@ void scantoarray()//抓檔案data至陣列
 	return;
 }
 
+int JudgmentDate(char date[20], int choice, int count)
+{
+	time_t currentTime;
+	struct tm* localTime;
+
+	time(&currentTime);
+	localTime = localtime(&currentTime);
+	int Leap = (localTime->tm_year + 1900 % 4 == 0 && localTime->tm_year + 1900 % 100 != 0) || (localTime->tm_year + 1900 % 400 == 0) ? 29 : 28;//判別是否為閏年
+	int month, day;
+	char jdate [20];
+	//strcpy(jdate, date);
+	month = atoi(date) / 100;
+	day = atoi(date) % 100;
+	if (month > 12 || month <= 0)
+	{
+		printf("日期輸入錯誤\n");
+		Sleep(1000);
+		return -1;
+	}
+	switch (month)
+	{
+	case 4: case 6: case 9: case 11:
+		if ((day <= 30) && (day % 100 > 0))
+			break;
+		else
+		{
+			printf("日期輸入錯誤\n");
+			Sleep(1000);
+			return -1;
+		}
+	case 2:
+		if ((day <= Leap) && (day > 0))
+			break;
+		else
+		{
+			printf("日期輸入錯誤\n");
+			Sleep(1000);
+			return -1;
+		}
+	default:
+		if ((day <= 31) && (day > 0))
+			break;
+		else
+		{
+			printf("日期輸入錯誤\n");
+			Sleep(1000);
+			return -1;
+		}
+	}
+}
+
 void output(int choice, char search[20])
 {
-	int i, cmd = 0, tmp, total = 0, mtotal = 0; ;
+	int i, cmd = 0, tmp, total = 0, mtotal = 0, iFlag = 0; ;
 	char null[1] = { '\0' };
+	cmd = atoi(search);
 	if (choice == 1)//查日期
 	{
-		printf("-----%s支出-----\n", search);
+		printf("-----%2d/%2d支出-----\n", cmd / 100, cmd % 100);
 		for (i = 0; i < LIST_MAX; i++)
 		{
 			if (strcmp(search, expend[i].date) == 0)
 			{
 				printf("%s\t", expend[i].category);
 				printf("%s\n", expend[i].amount);
+				iFlag = 1;
 			}
 		}
 		printf("--------------------\n\n");
+		if (iFlag == 0)
+		{
+			system("cls");
+			printf("未查詢到%2d/%2d有任何支出\n\n", cmd / 100, cmd % 100);
+		}
 		return;
 	}
 
@@ -246,9 +311,15 @@ void output(int choice, char search[20])
 			{
 				printf("%s\t", expend[i].date);
 				printf("%s\n", expend[i].amount);
+				iFlag = 1;
 			}
 		}
 		printf("------------------\n\n");
+		if (iFlag == 0)
+		{
+			system("cls");
+			printf("未查詢到\"%s\"類別有任何支出\n\n",search);
+		}
 		return;
 	}
 
@@ -261,6 +332,12 @@ void output(int choice, char search[20])
 			tmp /= 100;
 			if (tmp == cmd)
 				total += atoi(expend[i].amount);
+		}
+		if (total == 0)
+		{
+			system("cls");
+			printf("未查詢到%s月有任何支出\n\n", search);
+			return;
 		}
 		printf("%s月份總支出為%d元\n\n", search, total);
 		return;
@@ -275,8 +352,14 @@ void output(int choice, char search[20])
 			printf("%s\t", expend[i].date);
 			printf("%s\t", expend[i].category);
 			printf("%s\n", expend[i].amount);
+			iFlag = 1;
 		}
 		printf("---------------\n\n");
+		if (iFlag == 0)
+		{
+			system("cls");
+			printf("未查詢到有任何支出\n\n");
+		}
 		return;
 	}
 
@@ -290,8 +373,14 @@ void output(int choice, char search[20])
 			printf("%s\t", income[i].date);
 			printf("%s\t", income[i].category);
 			printf("%s\n", income[i].amount);
+			iFlag = 1;
 		}
 		printf("---------------\n\n");
+		if (iFlag == 0)
+		{
+			system("cls");
+			printf("未查詢到有任何收入\n\n");
+		}
 		return;
 	}
 	else if (choice == 6)//查月收支
@@ -310,6 +399,12 @@ void output(int choice, char search[20])
 			tmp /= 100;
 			if (tmp == cmd)
 				total += atoi(income[i].amount);
+		}
+		if (total == 0)
+		{
+			system("cls");
+			printf("未查詢到%s月有任何收支\n\n",search);
+			return;
 		}
 		printf("%s月份總收支為%d元\n\n", search, total + mtotal);
 		return;
@@ -331,7 +426,12 @@ void output(int choice, char search[20])
 				break;
 			total += atoi(income[i].amount);
 		}
-
+		if (total + mtotal == 0)
+		{
+			system("cls");
+			printf("未查詢到有任何收支\n\n");
+			return;
+		}
 		printf("總收支為%d元\n\n", total + mtotal);
 		return;
 	}
@@ -349,9 +449,15 @@ int main()
 		printf("FILE NOT FOUND(u)");
 		return -1;
 	}
-	
+	time_t currentTime;
+	struct tm* localTime;
+
+	time(&currentTime);
+	localTime = localtime(&currentTime);
+	/*
 	while (1)
 	{
+		
 		for (i = 0; i < USER_MAX; i++)
 		{
 			char uname[20];
@@ -393,6 +499,7 @@ int main()
 			return 0;
 		}
 	}
+	*/
 prog://記帳程式區塊
 	{
 		FILE* fe = fopen(expendtxt, "r");
@@ -402,7 +509,7 @@ prog://記帳程式區塊
 			printf("FILE NOT FOUND(e|i)");
 			return -1;
 		}
-		int  choice;
+		int  choice,count;
 		int i = 0;
 		char search[20];
 		while (1)
@@ -413,8 +520,13 @@ prog://記帳程式區塊
 
 			if (choice == 1)//記帳
 			{
-				account(choice);
 				system("cls");//clear
+				printf(" ＿＿＿\n");
+				printf("| 記帳 |\n");
+				printf(" ￣￣￣\n");
+				printf("請輸入要記幾筆資料:");
+				scanf("%d", &count);
+				account(choice,count);
 			}
 			else if (choice == 2)//查帳
 			{
@@ -474,7 +586,7 @@ prog://記帳程式區塊
 			}
 			else if (choice == 3)//記收入
 			{
-				account(choice);
+				account(choice, count);
 				system("cls");//clear
 			}
 			else if (choice == 4)//查收入
@@ -487,6 +599,10 @@ prog://記帳程式區塊
 			{
 				while (1)
 				{
+					system("cls");//clear
+					printf(" ＿＿＿＿\n");
+					printf("| 查收支 |\n");
+					printf(" ￣￣￣￣\n");
 					choice = 0;
 					rewind(stdin);
 					printf("1.查詢月收支\n");
