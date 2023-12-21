@@ -4,28 +4,13 @@
 #include <string.h>
 #include <time.h>
 #include <windows.h>//Sleep
-
+#include "Header.h"
 
 #define USER_MAX 20
 #define LIST_MAX 100
 
 char* incometxt = "income.txt";
 char* expendtxt = "expend.txt";
-
-typedef struct
-{
-	char name[20];
-	char password[20];
-}
-User;//定義一個存放使用者的結構體
-
-typedef struct
-{
-	char date[20];//日期
-	char category[20];//種類
-	char amount[20];//金額
-}
-ListItem;//定義一個存放帳目的結構體
 
 User list[USER_MAX];//定義一個全域性陣列(登入註冊系統)
 ListItem income[LIST_MAX];//定義一個全域性陣列(記帳系統.支出)
