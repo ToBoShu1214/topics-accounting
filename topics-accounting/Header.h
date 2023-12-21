@@ -1,17 +1,30 @@
-typedef struct
-{
-	char name[20];
-	char password[20];
-}
-User;//定義一個存放使用者的結構體
+// Header.h
+#ifndef HEADER_H
+#define HEADER_H
 
-typedef struct
-{
-	char date[20];//日期
-	char category[20];//種類
-	char amount[20];//金額
-}
-ListItem;//定義一個存放帳目的結構體
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>  
+
+static char* incometxt = "income.txt";
+static char* expendtxt = "expend.txt";
+
+#define USER_MAX 20
+#define LIST_MAX 100
+
+typedef struct {
+    char name[20];
+    char password[20];
+} User;
+
+typedef struct {
+    char date[20];
+    char category[20];
+    char amount[20];
+} ListItem;
+
+User list[USER_MAX];//定義一個全域性陣列(登入註冊系統)
+ListItem income[LIST_MAX];//定義一個全域性陣列(記帳系統.支出)
+ListItem expend[LIST_MAX];//定義一個全域性陣列(記帳系統.收入)
 
 User login();
 void writeToFile(User u);
@@ -20,8 +33,10 @@ void registerUser();
 int login_menu();
 
 int prog_menu();
-ListItem account(int choice, int count);//鍵入data
-int writetoFile(ListItem wf, int choice);//將data寫入檔案
-void scantoarray();//抓檔案data至陣列
-int JudgmentDate(char date[20], int choice, int count);//判斷使用者輸入時間的合法性
+ListItem account(int choice, int count);
+int writetoFile(ListItem wf, int choice);
+void scantoarray();
+int JudgmentDate(char date[20], int choice, int count);
 void output(int choice, char search[20]);
+
+#endif // HEADER_H

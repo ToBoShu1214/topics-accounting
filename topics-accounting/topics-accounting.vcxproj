@@ -128,6 +128,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="prog.c" />
+    <ClCompile Include="sub.login.c" />
+    <ClCompile Include="sub.prog.c" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="expend.txt" />
