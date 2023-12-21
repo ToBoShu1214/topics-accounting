@@ -452,7 +452,7 @@ int main()
 
 	time(&currentTime);
 	localTime = localtime(&currentTime);
-	/*
+	
 	while (1)
 	{
 		
@@ -497,7 +497,7 @@ int main()
 			return 0;
 		}
 	}
-	*/
+	
 prog://記帳程式區塊
 	{
 		FILE* fe = fopen(expendtxt, "r");

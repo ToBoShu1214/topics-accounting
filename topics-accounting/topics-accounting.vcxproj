@@ -129,6 +129,11 @@
   <ItemGroup>
     <ClCompile Include="prog.c" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="expend.txt" />
+    <Text Include="income.txt" />
+    <Text Include="user.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
