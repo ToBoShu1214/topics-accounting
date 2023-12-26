@@ -25,11 +25,7 @@ int main()
 	{
 		for (int pi = 0; pi < USER_MAX; pi++)
 		{
-			char uname[20];
-			char upassword[20];
-			fscanf(fu, "%s%s", uname, upassword);
-			strcpy(list[pi].name, uname);
-			strcpy(list[pi].password, upassword);
+			fscanf(fu, "%s%s", list[pi].name, list[pi].password);
 			if (strcmp(list[pi].name, list[pi - 1].name) == 0)
 			{
 				strcpy(list[pi].name, null);
