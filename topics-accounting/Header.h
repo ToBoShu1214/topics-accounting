@@ -1,6 +1,7 @@
 // Header.h
-#ifndef HEADER_H
-#define HEADER_H
+#pragma once
+//#ifndef HEADER_H
+//#define HEADER_H
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>  
@@ -14,7 +15,11 @@ static char* expendtxt = "expend.txt";
 typedef struct {
     char name[20];
     char password[20];
-} User;
+}
+User;
+
+//User lg;
+User list[USER_MAX];//﹚竡办┦皚(祅爹╰参)
 
 typedef struct {
     char date[20];
@@ -22,21 +27,21 @@ typedef struct {
     char amount[20];
 } ListItem;
 
-User list[USER_MAX];//﹚竡办┦皚(祅爹╰参)
+
 ListItem income[LIST_MAX];//﹚竡办┦皚(癘眀╰参.や)
 ListItem expend[LIST_MAX];//﹚竡办┦皚(癘眀╰参.Μ)
 
 User login();
-void writeToFile(User u);
-int exist(User u);
+void writeToFile(User );
+int exist(User );
 void registerUser();
 int login_menu();
 
 int prog_menu();
-ListItem account(int choice, int count);
-int writetoFile(ListItem wf, int choice);
+ListItem account(int , int);
+int writetoFile(ListItem , int );
 void scantoarray();
-int JudgmentDate(char date[20], int choice, int count);
-void output(int choice, char search[20]);
+int JudgmentDate(char [20], int , int );
+void output(int , char [20]);
 
-#endif // HEADER_H
+//#endif // HEADER_H

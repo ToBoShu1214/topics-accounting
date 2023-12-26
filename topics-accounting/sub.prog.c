@@ -7,8 +7,8 @@ int prog_menu()
 	printf(" ￣￣￣￣\n");
 	rewind(stdin);
 	int choice = 0;
-	printf("1.記帳\n");
-	printf("2.查帳\n");
+	printf("1.記支出\n");
+	printf("2.查支出\n");
 	printf("3.記收入\n");
 	printf("4.查收入\n");
 	printf("5.查詢收益\n");
@@ -29,12 +29,20 @@ ListItem account(int choice, int count)//鍵入data
 	save = count;
 	do {
 		system("cls");
-		printf(" ＿＿＿\n");
-		printf("| 記帳 |\n");
-		printf(" ￣￣￣\n");
+		printf(" ＿＿＿＿\n");
+		printf("| 記支出 |\n");
+		printf(" ￣￣￣￣\n");
 		printf("第%d筆資料\n\n", save + 1 - count);
+		if (choice == 3)
+		{
+			system("cls");
+			printf(" ＿＿＿＿\n");
+			printf("| 記收入 |\n");
+			printf(" ￣￣￣￣\n");
+		}
 		printf("輸入日期(mmdd):");
 		scanf("%s", date);
+		
 		if (JudgmentDate(date, choice, count) == -1)
 			continue;
 		strcpy(ac.date, date);
@@ -78,28 +86,28 @@ int writetoFile(ListItem wf, int choice)//將data寫入檔案
 
 void scantoarray()//抓檔案data至陣列
 {
-	int i, j, ROW = LIST_MAX, COL = 3;
+	int si, sj, ROW = LIST_MAX, COL = 3;
 
 	FILE* fe = fopen(expendtxt, "r");
 	FILE* fi = fopen(incometxt, "r");
-	for (i = 0; i < ROW; i++)
+	for (si = 0; si < ROW; si++)
 	{
-		for (j = 0; j < COL; j++)
+		for (sj = 0; sj < COL; sj++)
 		{
-			if (j == 0)
+			if (sj == 0)
 			{
-				fscanf(fe, "%s", &expend[i].date);
-				fscanf(fi, "%s", &income[i].date);
+				fscanf(fe, "%s", &expend[si].date);
+				fscanf(fi, "%s", &income[si].date);
 			}
-			else if (j == 1)
+			else if (sj == 1)
 			{
-				fscanf(fe, "%s", &expend[i].category);
-				fscanf(fi, "%s", &income[i].category);
+				fscanf(fe, "%s", &expend[si].category);
+				fscanf(fi, "%s", &income[si].category);
 			}
-			else if (j == 2)
+			else if (sj == 2)
 			{
-				fscanf(fe, "%s", &expend[i].amount);
-				fscanf(fi, "%s", &income[i].amount);
+				fscanf(fe, "%s", &expend[si].amount);
+				fscanf(fi, "%s", &income[si].amount);
 			}
 		}
 	}
@@ -159,18 +167,18 @@ int JudgmentDate(char date[20], int choice, int count)//判斷使用者輸入時間的合法
 
 void output(int choice, char search[20])
 {
-	int i, cmd = 0, tmp, total = 0, mtotal = 0, iFlag = 0; ;
+	int oi, cmd = 0, tmp, total = 0, mtotal = 0, iFlag = 0; ;
 	char null[1] = { '\0' };
 	cmd = atoi(search);
 	if (choice == 1)//查日期
 	{
 		printf("-----%02d/%02d支出-----\n", cmd / 100, cmd % 100);
-		for (i = 0; i < LIST_MAX; i++)
+		for (oi = 0; oi < LIST_MAX; oi++)
 		{
-			if (strcmp(search, expend[i].date) == 0)
+			if (strcmp(search, expend[oi].date) == 0)
 			{
-				printf("%s\t", expend[i].category);
-				printf("%s\n", expend[i].amount);
+				printf("%s\t", expend[oi].category);
+				printf("%s\n", expend[oi].amount);
 				iFlag = 1;
 			}
 		}
@@ -186,12 +194,12 @@ void output(int choice, char search[20])
 	else if (choice == 2)//查類別
 	{
 		printf("-----%s支出-----\n", search);
-		for (i = 0; i < LIST_MAX; i++)
+		for (oi = 0; oi < LIST_MAX; oi++)
 		{
-			if (strcmp(search, expend[i].category) == 0)
+			if (strcmp(search, expend[oi].category) == 0)
 			{
-				printf("%s\t", expend[i].date);
-				printf("%s\n", expend[i].amount);
+				printf("%s\t", expend[oi].date);
+				printf("%s\n", expend[oi].amount);
 				iFlag = 1;
 			}
 		}
@@ -206,13 +214,19 @@ void output(int choice, char search[20])
 
 	else if (choice == 3)//查月支出
 	{
-		for (i = 0; i < LIST_MAX; i++)
+		printf("-----%02d月支出-----\n", cmd / 100);
+		for (oi = 0; oi < LIST_MAX; oi++)
 		{
 			cmd = atoi(search);
-			tmp = atoi(expend[i].date);//atoi為將字元陣列強制轉換為整數
+			tmp = atoi(expend[oi].date);//atoi為將字元陣列強制轉換為整數
 			tmp /= 100;
 			if (tmp == cmd)
-				total += atoi(expend[i].amount);
+			{
+				printf("%s\t", expend[oi].category);
+				printf("%s\n", expend[oi].amount);
+				total += atoi(expend[oi].amount);
+			}
+			printf("------------------\n\n");
 		}
 		if (total == 0)
 		{
@@ -226,13 +240,14 @@ void output(int choice, char search[20])
 	else if (choice == 4)//查全部支出
 	{
 		printf("-----總支出-----\n");
-		for (i = 0; i < LIST_MAX; i++)
+		for (oi = 0; oi < LIST_MAX; oi++)
 		{
-			if (strcmp(null, expend[i].date) == 0)
+			if (strcmp(null, expend[oi].date) == 0)
 				break;
-			printf("%04s\t", expend[i].date);
-			printf("%s\t", expend[i].category);
-			printf("%s\n", expend[i].amount);
+			printf("%04s\t", expend[oi].date);
+			printf("%s\t", expend[oi].category);
+			printf("%s\n", expend[oi].amount);
+			total += atoi(expend[oi].amount);
 			iFlag = 1;
 		}
 		printf("---------------\n\n");
@@ -240,20 +255,21 @@ void output(int choice, char search[20])
 		{
 			system("cls");
 			printf("未查詢到有任何支出\n\n");
+			return;
 		}
-		return;
+		printf("總支出為%d元\n\n", total);
 	}
 
 	else if (choice == 5)//查收入
 	{
 		printf("-----總收入-----\n");
-		for (i = 0; i < LIST_MAX; i++)
+		for (oi = 0; oi < LIST_MAX; oi++)
 		{
-			if (strcmp(null, income[i].date) == 0)
+			if (strcmp(null, income[oi].date) == 0)
 				break;
-			printf("%04s\t", income[i].date);
-			printf("%s\t", income[i].category);
-			printf("%s\n", income[i].amount);
+			printf("%04s\t", income[oi].date);
+			printf("%s\t", income[oi].category);
+			printf("%s\n", income[oi].amount);
 			iFlag = 1;
 		}
 		printf("---------------\n\n");
@@ -269,19 +285,25 @@ void output(int choice, char search[20])
 		cmd = atoi(search);
 		mtotal = 0;
 		total = 0;
-		for (i = 0; i < LIST_MAX; i++)
+		for (oi = 0; oi < LIST_MAX; oi++)
 		{
-			tmp = atoi(expend[i].date);//atoi為將字元陣列強制轉換為整數
+			tmp = atoi(expend[oi].date);//atoi為將字元陣列強制轉換為整數
 			tmp /= 100;
+			if (strcmp(null, expend[oi].date) == 0)//無資料就脫離迴圈
+				break;
 			if (tmp == cmd)
-				mtotal += -(atoi(expend[i].amount));
-
-			tmp = atoi(income[i].date);//atoi為將字元陣列強制轉換為整數
-			tmp /= 100;
-			if (tmp == cmd)
-				total += atoi(income[i].amount);
+				mtotal += -(atoi(expend[oi].amount));
 		}
-		if (total == 0)
+		for (oi = 0; oi < LIST_MAX; oi++)
+		{
+			tmp = atoi(income[oi].date);//atoi為將字元陣列強制轉換為整數
+			tmp /= 100;
+			if (strcmp(null, income[oi].date) == 0)//無資料就脫離迴圈
+				break;
+			if (tmp == cmd)
+				total += atoi(income[oi].amount);
+		}
+		if (total + mtotal == 0)
 		{
 			system("cls");
 			printf("未查詢到%s月有任何收支\n\n", search);
@@ -294,18 +316,18 @@ void output(int choice, char search[20])
 	{
 		mtotal = 0;
 		total = 0;
-		for (i = 0; i < LIST_MAX; i++)
+		for (oi = 0; oi < LIST_MAX; oi++)
 		{
-			if (strcmp(null, expend[i].date) == 0)
+			if (strcmp(null, expend[oi].date) == 0)//無資料就脫離迴圈
 				break;
-			mtotal += -(atoi(expend[i].amount));
+			mtotal += -(atoi(expend[oi].amount));
 
 		}
-		for (i = 0; i < LIST_MAX; i++)
+		for (oi = 0; oi < LIST_MAX; oi++)
 		{
-			if (strcmp(null, income[i].date) == 0)
+			if (strcmp(null, income[oi].date) == 0)//無資料就脫離迴圈
 				break;
-			total += atoi(income[i].amount);
+			total += atoi(income[oi].amount);
 		}
 		if (total + mtotal == 0)
 		{

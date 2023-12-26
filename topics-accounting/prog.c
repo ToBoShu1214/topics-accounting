@@ -1,16 +1,15 @@
 #define _CRT_SECURE_NO_WARNINGS
 
+#include "Header.h"
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>//Sleep
-#include "Header.h"
 
 int main()
 {
-
 	FILE* fu = fopen("user.txt", "r");
-	int i = 0;
 	User u;
+	char null[1] = { '\0' };
 	if (NULL == fu)
 	{
 		printf("FILE NOT FOUND(u)");
@@ -24,15 +23,19 @@ int main()
 	
 	while (1)
 	{
-		
-		for (i = 0; i < USER_MAX; i++)
+		for (int pi = 0; pi < USER_MAX; pi++)
 		{
 			char uname[20];
 			char upassword[20];
 			fscanf(fu, "%s%s", uname, upassword);
-
-			strcpy(list[i].name, uname);
-			strcpy(list[i].password, upassword);
+			strcpy(list[pi].name, uname);
+			strcpy(list[pi].password, upassword);
+			if (strcmp(list[pi].name, list[pi - 1].name) == 0)
+			{
+				strcpy(list[pi].name, null);
+				strcpy(list[pi].password, null);
+				break;
+			}
 		}
 
 		int choice = login_menu();
@@ -88,9 +91,9 @@ prog://記帳程式區塊
 			if (choice == 1)//記帳
 			{
 				system("cls");//clear
-				printf(" ＿＿＿\n");
-				printf("| 記帳 |\n");
-				printf(" ￣￣￣\n");
+				printf(" ＿＿＿＿\n");
+				printf("| 記支出 |\n");
+				printf(" ￣￣￣￣\n");
 				printf("請輸入要記幾筆資料:");
 				scanf("%d", &count);
 				account(choice,count);
@@ -100,9 +103,9 @@ prog://記帳程式區塊
 				system("cls");//clear
 				while (1)
 				{
-					printf(" ＿＿＿\n");
-					printf("| 查帳 |\n");
-					printf(" ￣￣￣\n");
+					printf(" ＿＿＿＿\n");
+					printf("| 查支出 |\n");
+					printf(" ￣￣￣￣\n");
 					choice = 0;
 					printf("1.查詢日期\n");
 					printf("2.查詢類別\n");
@@ -153,6 +156,7 @@ prog://記帳程式區塊
 			}
 			else if (choice == 3)//記收入
 			{
+				count = 1;
 				account(choice, count);
 				system("cls");//clear
 			}

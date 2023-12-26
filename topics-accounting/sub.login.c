@@ -12,9 +12,9 @@ static void writeToFile(User u)
 
 int exist(User u) 
 {
-    int i;
-    for (i = 0; i < USER_MAX; i++) {
-        if (0 == strcmp(list[i].name, u.name) && 0 == strcmp(list[i].password, u.password)) {
+    int ei;
+    for (ei = 0; ei < USER_MAX; ei++) {
+        if (0 == strcmp(list[ei].name, u.name) && 0 == strcmp(list[ei].password, u.password)) {
             return 1;
         }
     }
@@ -26,26 +26,29 @@ void registerUser()
     char name[20];
     char password[20];
     User user;
-    int i;
+    int ri = 0;
+    char null[1] = { '\0' };
 
     printf(" ＿＿＿\n");
     printf("| 註冊 |\n");
     printf(" ￣￣￣\n");
     printf("輸入使用者名稱:");
     scanf("%s", name);
-    strcpy(user.name, name);
-
-    for (i = 0; i < USER_MAX; i++) 
+    rewind(stdin);
+    for (ri = 0; ri < USER_MAX; ri++) 
     {
-        if (0 == strcmp(list[i].name, name)) 
+        if (strcmp(list[ri].name, null) == 0)
+            break;
+        if (strcmp(list[ri].name, name) == 0)
         {
             printf("使用者名稱已經存在\n");
             return;
         }
     }
-
+    strcpy(user.name, name);
     printf("輸入使用者密碼:");
     scanf("%s", password);
+    rewind(stdin);
     strcpy(user.password, password);
     writeToFile(user);
     printf("註冊成功\n");
@@ -63,6 +66,7 @@ int login_menu()
     printf("#.離開\n");
     printf("輸入你的選擇:");
     scanf("%d", &choice);
+    //rewind(stdin);
     return choice;
 }
 
@@ -76,9 +80,11 @@ User login()//登入函式
     printf(" ￣￣￣\n");
     printf("輸入使用者名稱:");
     scanf("%s", name);
+    //rewind(stdin);
     strcpy(lg.name, name);
     printf("輸入使用者密碼:");
     scanf("%s", password);
+    //rewind(stdin);
     strcpy(lg.password, password);
     return lg;
 }
