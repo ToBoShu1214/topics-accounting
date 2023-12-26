@@ -11,6 +11,7 @@
 ### **登入註冊**
 >1.登入  
 >2.註冊
+>>2-1辨識是否已註冊
 ### **記帳查帳**
 #### 記帳部分
 >1.計收入  
@@ -32,7 +33,35 @@
 # **甘特圖**
 ![image](https://img.onl/UnSmdy)
 # **技術使用說明**
+## 規劃
+>流程圖 --Chap1--  
+>標頭檔設置 --Chap7--  
+>善用中斷點監看 --Chap2--  
 
+## 登入/註冊
+>基本變數設定(int,char) --Chap2--
+>>呼叫函式定義檔(stdilb.h, stdio.h, string.h, windows.h) --Chap2--  
+>輸入/輸出(printf,scanf),格式不同(type) --Chap3--
+>清除緩衝區問題(rewind) --Chap3--
+>決策/巢狀構造/多重選擇(if else) --Chap5--  
+>存取字元/數字(一維陣列) --Chap6--  
+>判斷(==,>=,!=,&&,||) --Chap4--  
+>自訂/呼叫函式 --Chap4,7--
+>傳遞數值(指標) --Chap8--  
+結構陣列,結構指標變數(struct) --Chap9--  
+>開啟檔案(fopen)，讀取(fgets,fscanf)，寫入(fprintf),比較(strncmp) --Chap10--  
+## 查/記帳
+>基本變數設定(int,char) --Chap2--
+>>呼叫函式定義檔(stdilb.h, stdio.h, string.h, windows.h, time.h) --Chap2--  
+>輸入/輸出(printf,scanf),格式不同(type) --Chap3--
+>清除緩衝區問題(rewind) --Chap3--
+>決策/巢狀構造/多重選擇(if else) --Chap5--  
+>存取字元/數字(一維陣列) --Chap6--  
+>判斷(==,>=,!=,&&,||) --Chap4--  
+>自訂/呼叫函式 --Chap4,7--
+>傳遞數值(指標, pass by value, pass by pointer) --Chap8--  
+結構陣列,結構指標變數(struct) --Chap9--  
+>開啟檔案(fopen)，讀取(fgets,fscanf)，寫入(fputs,fputc),比較(strncmp) --Chap10--  
 # **開發時間**
 11/30 參考網路上的source code作為範本撰寫登入註冊系統及debug 4hr  
 12/01 完成登入註冊系統 1hr  
