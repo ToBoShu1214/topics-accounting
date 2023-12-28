@@ -11,6 +11,7 @@
 ### **登入註冊**
 >1.登入  
 >2.註冊
+>>2-1辨識是否已註冊
 ### **記帳查帳**
 #### 記帳部分
 >1.計收入  
@@ -30,9 +31,37 @@
 ![image](https://mermaid.ink/img/pako:eNp1VVtPE0EU_iuT5RVIBHzpg8lCuZSb3G_TPmzoKkQLpJYHs0vSBpDKxWDSANqVpgR0xWgTjbpSiD_G7u1fOHPObjtQffvmfN85Z85lZzVpcTWpShHpcVpZWyJT0fgKITL1j_bsD3sJ0tb2gHRr7puqvX3xJ5vzzKr9YneDa7qB0--1E2R10kMRJQS6o52gj06iFJFIt7QTv3jGkumkl7rfD513JaB7gO7T7Py5c_SzdvPbLZhedhsSR4GTQ9I5qdiH7zG0n3sFErkPw9ufT2zD1Aeov1_xLs89c9fJVSDBbQHpD67u5A_t3ZKoqFkHoegfYTCR3B-UJrjL_dg7jgcaEK0xzc9-ZelqVtXPWfbRF7h1rN5RzzyxrW86GaSIEgLNOuqULoAeoohEuhO8ncIPGMkwrR9EURfECEUjtH4QRfdB5H08Y5RbZAMcpeJZlLbgEuxc6eShOMZBoMeod23x5h5fOEaJbZFfPrXzfJ38ndd--QCkYyAdp3blE5deFpxyHohxHPeAhoN2f127V_sYEGeN3dUZrQ-KBibWY9wwBOcJLbgF1MCvcLoHASbqbQ_Kg2vqZPLWtROCtCOUYiE6mQqkeBalnaHUfbvlGPla9ca1bpxCBXo1HWYAQnTrCt3sbdPfNEOHGeqXK-75lWgV3djI7OJpfat0EhNIcUjcPAnm2SAkVukWLf_YEALPYu84nAI4F-ix1Cb9XEM_DXA-jH-7eBDPN8QzABf-V998MGPjZdiKCcHsbpVDMxS80Ig7jBvI4Qjen8NR3CmZNq8Efrzy3Z0w8mzrWRKdyN3NUwv19cWAOgN9D2VviG9k0Qv1-PzJ0ebmcCfU4Bso9waaOyy-glCu3BtifpJapZSaTinLSfaoa9wSlzJLakqNSxEGk0r6SVyKr2wwnbKeWZ18vrIoRTLpdbVVWl9LKhk1uqywf0FKijxSnj5jVjW5nFlNj-BfAn4WG38BQvLjZg?type=png)  
 
 # **甘特圖**
-![image](https://img.onl/UnSmdy)
+![image](https://i.imgur.com/IsMDvp1.png)
 # **技術使用說明**
+## 規劃
+>流程圖 --Chap1--  
+>標頭檔設置 --Chap7--  
+>善用中斷點監看 --Chap2--  
 
+## 登入/註冊
+>基本變數設定(int,char) --Chap2--
+>呼叫函式定義檔(stdilb.h, stdio.h, string.h, windows.h) --Chap2--  
+>輸入/輸出(printf,scanf),格式不同(type) --Chap3--
+>清除緩衝區問題(rewind) --Chap3--
+>決策/巢狀構造/多重選擇(if else) --Chap5--  
+>存取字元/數字(一維陣列) --Chap6--  
+>判斷(==,>=,!=,&&,||) --Chap4--  
+>自訂/呼叫函式 --Chap4,7--
+>傳遞數值(指標) --Chap8--  
+結構陣列,結構指標變數(struct) --Chap9--  
+>開啟檔案(fopen)，讀取(fgets,fscanf)，寫入(fprintf),比較(strncmp) --Chap10--  
+## 查/記帳
+>基本變數設定(int,char) --Chap2--
+>呼叫函式定義檔(stdilb.h, stdio.h, string.h, windows.h, time.h) --Chap2--  
+>輸入/輸出(printf,scanf),格式不同(type) --Chap3--
+>清除緩衝區問題(rewind) --Chap3--
+>決策/巢狀構造/多重選擇(if else) --Chap5--  
+>存取字元/數字(一維陣列) --Chap6--  
+>判斷(==,>=,!=,&&,||) --Chap4--  
+>自訂/呼叫函式 --Chap4,7--
+>傳遞數值(指標, pass by value, pass by pointer) --Chap8--  
+結構陣列,結構指標變數(struct) --Chap9--  
+>開啟檔案(fopen)，讀取(fgets,fscanf)，寫入(fputs,fputc),比較(strncmp) --Chap10--  
 # **開發時間**
 11/30 參考網路上的source code作為範本撰寫登入註冊系統及debug 4hr  
 12/01 完成登入註冊系統 1hr  
@@ -41,3 +70,5 @@
 12/06 優化UI及製作流程圖 2hr  
 12/11 新增功能-判斷使用者輸入時間的合法性 4hr  
 12/21 將自訂標頭檔及副程式獨立 6hr  
+12/26 修正Bug-查月收益之邏輯錯誤 1hr  
+12/26 修正Bug-登入註冊系統 2hr  
