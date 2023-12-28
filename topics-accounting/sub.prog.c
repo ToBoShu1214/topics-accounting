@@ -214,7 +214,7 @@ void output(int choice, char search[20])
 
 	else if (choice == 3)//查月支出
 	{
-		printf("-----%02d月支出-----\n", cmd / 100);
+		printf("-----%02d月支出-----\n", cmd);
 		for (oi = 0; oi < LIST_MAX; oi++)
 		{
 			cmd = atoi(search);
@@ -226,8 +226,8 @@ void output(int choice, char search[20])
 				printf("%s\n", expend[oi].amount);
 				total += atoi(expend[oi].amount);
 			}
-			printf("------------------\n\n");
 		}
+		printf("------------------\n\n");
 		if (total == 0)
 		{
 			system("cls");
