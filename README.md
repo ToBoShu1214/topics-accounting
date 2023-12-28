@@ -40,7 +40,7 @@
 
 ## 登入/註冊
 >基本變數設定(int,char) --Chap2--
->>呼叫函式定義檔(stdilb.h, stdio.h, string.h, windows.h) --Chap2--  
+>呼叫函式定義檔(stdilb.h, stdio.h, string.h, windows.h) --Chap2--  
 >輸入/輸出(printf,scanf),格式不同(type) --Chap3--
 >清除緩衝區問題(rewind) --Chap3--
 >決策/巢狀構造/多重選擇(if else) --Chap5--  
@@ -52,7 +52,7 @@
 >開啟檔案(fopen)，讀取(fgets,fscanf)，寫入(fprintf),比較(strncmp) --Chap10--  
 ## 查/記帳
 >基本變數設定(int,char) --Chap2--
->>呼叫函式定義檔(stdilb.h, stdio.h, string.h, windows.h, time.h) --Chap2--  
+>呼叫函式定義檔(stdilb.h, stdio.h, string.h, windows.h, time.h) --Chap2--  
 >輸入/輸出(printf,scanf),格式不同(type) --Chap3--
 >清除緩衝區問題(rewind) --Chap3--
 >決策/巢狀構造/多重選擇(if else) --Chap5--  
